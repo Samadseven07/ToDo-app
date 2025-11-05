@@ -6,23 +6,27 @@
     <title>My ToDo List</title>
 </head>
 <body>
+    <h4>{{request.user}}</h4>
+    <hr>
     <h1>My ToDo list</h1>
-    <a href="{% url 'task-create' %}">Add task</a>
     <table>
+        {% for task in tasks  %}
         <tr>
             <th>Item</th>
             <th>View</th>
             <th>Update</th>
+            <th>Delete</th>
         </tr>
-        {% for task in tasks  %}
-            <tr>
-                <td>{{task.title}}</td>
-                <td><a href="{% url 'task' task.id%}">View</a></td>
-                <td><a href="{% url 'task-update' task.id%}">Edit</a></td>
-            </tr>
-            {% empty %}
-            <h3>No Item in list</h3>
+        <tr>
+            <td>{{task.title}}</td>
+            <td><a href="{% url 'task' task.id%}">View</a></td>
+            <td><a href="{% url 'task-update' task.id%}">Edit</a></td>
+            <td><a href="{% url 'task-delete' task.id%}">Delete</a></td>
+        </tr>
+        {% empty %}
+        <h3>No Item in list</h3>
         {% endfor %}
+        <a href="{% url 'task-create' %}">Add task</a>
             
     </table>
 </body>
