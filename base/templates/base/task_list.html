@@ -11,12 +11,14 @@
     <table>
         <tr>
             <th>Item</th>
-            <th></th>
+            <th>View</th>
+            <th>Update</th>
         </tr>
         {% for task in tasks  %}
             <tr>
                 <td>{{task.title}}</td>
                 <td><a href="{% url 'task' task.id%}">View</a></td>
+                <td><a href="{% url 'task-update' task.id%}">Edit</a></td>
             </tr>
             {% empty %}
             <h3>No Item in list</h3>
