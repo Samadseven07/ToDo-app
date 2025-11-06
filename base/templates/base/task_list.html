@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My ToDo List</title>
 </head>
+
 <body>
-    
-    {% if request.user.is_authenticated  %}
-    <h4>{{request.user}}</h4>
-    <a href="{% url 'logout' %}">Logout</a>
+
+    {% if request.user.is_authenticated %}
+    <h3>{{ request.user }}</h3>
+    <form action="{% url 'logout' %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
     {% else %}
     <a href="{% url 'login' %}">Login</a>
     {% endif %}
-        
+
+
     <hr>
     <h1>My ToDo list</h1>
     <table>
@@ -24,7 +30,7 @@
             <th>Update</th>
             <th>Delete</th>
         </tr>
-        {% for task in tasks  %}
+        {% for task in tasks %}
         <tr>
             <td>{{task.title}}</td>
             <td><a href="{% url 'task' task.id%}">View</a></td>
@@ -34,7 +40,8 @@
         {% empty %}
         <h3>No Item in list</h3>
         {% endfor %}
-            
+
     </table>
 </body>
+
 </html>
