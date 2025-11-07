@@ -639,3 +639,207 @@ input:focus {
 }
 
 
+/* ===== TASK FORM PAGE ===== */
+.task-form-card {
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  padding: 32px;
+  margin-top: 24px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.form-title {
+  font-size: 1.8rem;
+  color: var(--primary);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* Style for form paragraphs (from {{ form.as_p }}) */
+.task-form-card form p {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.task-form-card form p label {
+  display: block;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+/* Input & Textarea */
+.task-form-card form input[type="text"],
+.task-form-card form input[type="email"],
+.task-form-card form input[type="password"],
+.task-form-card form textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  background-color: #fafbff;
+  transition: var(--transition);
+}
+
+/* Disable resize on textarea */
+.task-form-card form textarea {
+  min-height: 120px;
+  resize: none; /* 👈 This removes the resize handle */
+  overflow-y: auto;
+}
+
+.task-form-card form input:focus,
+.task-form-card form textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(106, 90, 249, 0.2);
+}
+
+/* Checkbox */
+.task-form-card form input[type="checkbox"] {
+  width: auto;
+  height: auto;
+  transform: scale(1.3);
+  margin-left: 8px;
+}
+
+/* Submit button — match your purple theme */
+.task-form-card input[type="submit"] {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: var(--border-radius);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 16px;
+}
+
+.task-form-card input[type="submit"]:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+/* Back link */
+.back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  color: var(--gray);
+  font-weight: 500;
+  text-decoration: none;
+  transition: var(--transition);
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.back-link:hover {
+  color: var(--primary);
+  background: #ebf8ff;
+  border-color: var(--primary);
+  text-decoration: underline;
+}
+
+/* Header main bar — ensure it’s centered title + right actions */
+.header-main {
+  display: flex;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid #e2e8f0;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.header-main h1 {
+  position: static;
+  text-align: center;
+  font-size: 1.6rem;
+  color: var(--primary);
+  margin: 0 auto;
+  font-weight: 700;
+  flex: 1;
+}
+
+.header-main .username {
+  font-weight: 600;
+  color: var(--dark);
+  font-size: 1.1rem;
+  white-space: nowrap;
+  margin-left: 16px;
+}
+
+.header-main .actions {
+  display: flex;
+  gap: 12px;
+  margin-left: 16px;
+}
+
+.header-main .btn-add-task {
+  background: var(--primary);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.header-main .btn-add-task:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+.header-main .btn-logout,
+.header-main .btn-login {
+  background: #e2e8f0;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.header-main .btn-logout:hover,
+.header-main .btn-login:hover {
+  background: #cbd5e0;
+  color: var(--dark);
+}
+
+/* Responsive: Stack header on mobile */
+@media (max-width: 600px) {
+  .header-main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .header-main h1,
+  .header-main .username,
+  .header-main .actions {
+    width: 100%;
+    text-align: left;
+    margin-left: 0;
+  }
+
+  .task-form-card {
+    padding: 24px 16px;
+    margin: 24px 0;
+  }
+
+  .back-link {
+    display: block;
+    text-align: left;
+  }
+}
