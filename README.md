@@ -1,10 +1,10 @@
-ToDo-app
+# ToDo-app
 
 A simple and efficient To-Do list application built with Django.
 Manage your daily tasks effortlessly — add, edit, delete, and mark tasks as done.
 Includes a clean, responsive UI and user authentication for personalized task management.
 
-Features
+# Features
 
 Add, edit, and delete tasks
 
@@ -16,7 +16,7 @@ Simple and clean interface
 
 Lightweight and easy to set up
 
-Tech Stack
+# Tech Stack
 
 Backend: Django (Python)
 
@@ -24,20 +24,20 @@ Frontend: HTML, CSS, JavaScript
 
 Database: SQLite (default)
 
-Installation & Setup
+# Installation & Setup
 1. Clone the repository
 git clone https://github.com/Samadseven07/ToDo-app.git
 cd ToDo-app
 
 2. Create and activate a virtual environment
 
-For Windows:
+# For Windows:
 
 python -m venv venv
 venv\Scripts\activate
 
 
-For macOS/Linux:
+# For macOS/Linux:
 
 python3 -m venv venv
 source venv/bin/activate
@@ -55,10 +55,10 @@ python manage.py createsuperuser
 python manage.py runserver
 
 
-Then open your browser and go to:
-http://127.0.0.1:8000
+# Then open your browser and go to:
+# http://127.0.0.1:8000
 
-Usage
+# Usage
 
 Register or log in to your account
 
