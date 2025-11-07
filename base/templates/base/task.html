@@ -1,12 +1,13 @@
 {% extends "base/main.html" %}
 
-{% block title %}
-    <title>{{task.title}} Task Details</title>
-{% endblock title %}
-
 {% block body %}
-    <a href="{% url 'tasks' %}" class="back-link">Back to Tasks</a>
+<!-- Back Link -->
+    <a href="{% url 'tasks' %}" class="back-link">← Back to Tasks</a>
+    <hr>
 
-    <h1>Task Detail: {{ task.title }}</h1>
-    <h2>Description: {{ task.description }}</h2>
+    <!-- Task Detail Card -->
+    <div class="task-detail-card">
+        <h2 class="task-title">Task Detail: {{ task.title }}</h2>
+        <p class="task-description"><strong>Description:</strong> {{ task.description }}</p>
+    </div>
 {% endblock body %}

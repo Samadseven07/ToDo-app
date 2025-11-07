@@ -1,30 +1,37 @@
 {% extends "base/main.html" %}
 
 {% block body %}
-    {% if request.user.is_authenticated %}
-        <div class="user-info">
-            <h1>{{request.user}}</h1>
-            <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit">Logout</button>
-            </form>
-        </div>
-    {% else %}
-        <div class="auth-links">
-            <a href="{% url 'login' %}">Login</a>
-        </div>
-    {% endif %}
+    <!-- Top Header Bar -->
+    <div class="top-header">
+        <h1 class="site-title">
+            <a href="{% url 'tasks' %}">My ToDo List</a>
+        </h1>
 
-    <div class="todo-header">
-        <h1>My ToDo List {{ color }}</h1>
-        <a href="{% url 'task-create' %}" class="add-task-btn">Add Task</a>
+        {% if request.user.is_authenticated %}
+            <span  class="username">{{ request.user }}</span>
+
+            <div class="user-actions">
+                <a href="{% url 'task-create' %}" class="btn-add-task">Add Task</a>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-logout">Logout</button>
+                </form>
+            </div>
+        {% else %}
+            <div class="user-actions">
+                <a href="{% url 'login' %}" class="btn-login">Login</a>
+            </div>
+        {% endif %}
     </div>
-<hr>
+
+    <!-- Search Form -->
+    {% csrf_token %}
     <form method="get" class="search-form">
         <input type="text" name="Search" value="{{ search_input }}" placeholder="Search tasks...">
         <input type="submit" value="Search">
     </form>
 
+    <!-- Task Table -->
     {% if tasks %}
         <table class="task-table">
             <thead>
@@ -38,10 +45,14 @@
             <tbody>
                 {% for task in tasks %}
                     <tr>
-                        <td>{{ task.title }}</td>
-                        <td><a href="{% url 'task' task.id %}">View</a></td>
-                        <td><a href="{% url 'task-update' task.id %}">Edit</a></td>
-                        <td><a href="{% url 'task-delete' task.id %}">Delete</a></td>
+                        <td data-label="Item">{{ task.title }}</td>
+                        <td data-label="View"><a href="{% url 'task' task.id %}" class="btn-view">View</a></td>
+                        <td data-label="Update"><a href="{% url 'task-update' task.id %}" class="btn-edit">Edit</a></td>
+                        <td data-label="Delete">
+                            <button type="button" class="btn-delete" onclick="confirmDelete({{ task.id }}, '{{ task.title|escapejs }}')">
+                                Delete
+                            </button>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -49,4 +60,60 @@
     {% else %}
         <h3>No items in the list</h3>
     {% endif %}
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Confirm Deletion</h3>
+            <p id="modalMessage">Are you sure you want to delete this task?</p>
+            <div class="modal-buttons">
+                <button id="confirmBtn" class="btn-confirm">Yes, Delete</button>
+                <button id="cancelBtn" class="btn-cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
 {% endblock body %}
+
+{% block scripts %}
+<script>
+function confirmDelete(taskId, taskTitle) {
+    const modal = document.getElementById('deleteModal');
+    const modalMessage = document.getElementById('modalMessage');
+    const confirmBtn = document.getElementById('confirmBtn');
+
+    modalMessage.textContent = `Are you sure you want to delete "${taskTitle}"?`;
+    modal.style.display = 'flex';
+
+    // Get CSRF token
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    confirmBtn.onclick = () => {
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = `/task-delete/${taskId}/`;
+
+        const csrfInput = document.createElement('input');
+        csrfInput.type = 'hidden';
+        csrfInput.name = 'csrfmiddlewaretoken';
+        csrfInput.value = csrfToken;
+        form.appendChild(csrfInput);
+
+        document.body.appendChild(form);
+        form.submit();
+    };
+
+    document.querySelector('.close').onclick = () => {
+        modal.style.display = 'none';
+    };
+
+    document.getElementById('cancelBtn').onclick = () => {
+        modal.style.display = 'none';
+    };
+
+    window.onclick = (e) => {
+        if (e.target === modal) modal.style.display = 'none';
+    };
+}
+</script>
+{% endblock scripts %}
