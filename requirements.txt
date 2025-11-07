@@ -1,0 +1,22 @@
+# Core framework
+Django==5.2.7
+
+# Optional but common dependencies
+asgiref>=3.8.1,<4.0
+sqlparse>=0.5.1,<1.0
+tzdata>=2024.1  # needed on Windows for timezone support
+
+# If using environment variables (recommended)
+python-dotenv>=1.0.1
+
+# If you plan to use Django Debug Toolbar for development
+django-debug-toolbar>=6.1.0
+
+# If using Pillow for image fields
+Pillow>=11.0.0
+
+# If using crispy forms (optional)
+django-crispy-forms>=2.1
+
+# If you want to use whitenoise for static file handling (good for deployment)
+whitenoise>=6.7.0

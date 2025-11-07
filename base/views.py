@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
@@ -23,6 +23,20 @@ class RegisterPage(FormView):
     redirect_authenticated_user = True
     success_url = reverse_lazy("tasks")
 
+    def form_valid(self, form):
+        user = form.save()
+        if user is not None:
+            login(self.request, user)
+        return super(RegisterPage, self).form_valid(form)
+    
+    def get(self, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('tasks')
+        return super(RegisterPage, self).get("register")
+
+    
+    
+
 class TaskList(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = 'tasks'
@@ -31,7 +45,14 @@ class TaskList(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs) 
         context['tasks'] = context['tasks'].filter(user=self.request.user)
         context['count'] = context['tasks'].filter(complete=False).count()
+
+
+        search_input = self.request.GET.get('Search') or ''
+        if search_input:
+            context['tasks']  = context['tasks'].filter(title__startswith=search_input)
+        context["search_input"] = search_input
         return context
+
 class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task
     template_name = "base/task.html"
@@ -56,3 +77,7 @@ class TaskDelete(LoginRequiredMixin,DeleteView):
     context_object_name = 'task'
     template_name = "base/task-delete.html"
     success_url = reverse_lazy("tasks")
+
+
+# def error_404(request):
+#     return render(request, 'base/404.html' )
