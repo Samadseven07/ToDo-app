@@ -2,6 +2,35 @@
 {% load static %}
 
 {% block body %}
+    <style>
+        .btn-done {
+            background-color: #f8f9fa; /* light gray (default) */
+            color: #333;
+            border: 1px solid #dee2e6;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .btn-done:hover {
+            background-color: #e9ecef; /* slightly darker gray on hover */
+            border-color: #cbd5e0;
+        }
+
+        .btn-done.completed {
+            background-color: #4CAF50; /* green */
+            color: white;
+            border-color: #45a049;
+        }
+
+        .btn-done.completed:hover {
+            background-color: #45a049; /* darken green on hover */
+            border-color: #3d8b40;
+        }
+    </style>
     <!-- Top Header Bar -->
     <div class="top-header">
         <h1 class="site-title">
@@ -40,6 +69,7 @@
                     <th>View</th>
                     <th>Update</th>
                     <th>Delete</th>
+                    <th>Done</th> 
                 </tr>
             </thead>
             <tbody>
@@ -52,6 +82,12 @@
                             <button type="button" class="btn-delete"
                                     onclick="confirmDelete({{ task.id }}, '{{ task.title|escapejs }}')">
                                 Delete
+                            </button>
+                        </td>
+                        <td data-label="Done">
+                            <button type="button" class="btn-done {% if task.completed %}completed{% endif %}"
+                                    onclick="toggleDone(this, {{ task.id }})">
+                                Done
                             </button>
                         </td>
                     </tr>
@@ -74,6 +110,7 @@
         </div>
     </div>
 
+    <!-- JavaScript -->
     <script>
     function confirmDelete(taskId, taskTitle) {
         const modal = document.getElementById('deleteModal');
@@ -113,7 +150,11 @@
             if (e.target === modal) modal.style.display = 'none';
         };
     }
+
+    // Toggle Done button green/white
+    function toggleDone(button, taskId) {
+        button.classList.toggle('completed');
+    }
     </script>
 
 {% endblock body %}
-

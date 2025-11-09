@@ -23,10 +23,10 @@
                 {{ form.description }}
             </div>
 
-            <div class="form-group">
+            {% comment %} <div class="form-group">
                 <label for="{{ form.complete.id_for_label }}">Complete:</label>
                 {{ form.complete }}
-            </div>
+            </div> {% endcomment %}
 
             <div class="form-actions">
                 <button type="submit" class="btn-submit">{% if task %}Update{% else %}Create{% endif %} Task</button>

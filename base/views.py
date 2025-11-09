@@ -34,8 +34,6 @@ class RegisterPage(FormView):
             return redirect('tasks')
         return super(RegisterPage, self).get("register")
 
-    
-    
 
 class TaskList(LoginRequiredMixin, ListView):
     model = Task
